@@ -5,13 +5,13 @@ import { kruskalMST } from "@/utils/kruskal";
 import { useToast } from "@/components/ui/use-toast";
 
 const nodes = [
-  { id: "Chattogram", x: 750, y: 500 },
-  { id: "Dhaka", x: 250, y: 250 },
-  { id: "Cumilla", x: 550, y: 375 },
-  { id: "Chandpur", x: 450, y: 500 },
-  { id: "Feni", x: 650, y: 550 },
-  { id: "Brahmanbaria", x: 500, y: 200 },
-  { id: "Narsingdi", x: 300, y: 375 },
+  { id: "Chattogram", x: 900, y: 600 },
+  { id: "Dhaka", x: 300, y: 300 },
+  { id: "Cumilla", x: 650, y: 450 },
+  { id: "Chandpur", x: 550, y: 600 },
+  { id: "Feni", x: 750, y: 650 },
+  { id: "Brahmanbaria", x: 600, y: 250 },
+  { id: "Narsingdi", x: 400, y: 450 },
 ];
 
 const edges = [
@@ -40,22 +40,49 @@ const Index = () => {
     });
   };
 
+  const handleReset = () => {
+    setMstEdges(undefined);
+    toast({
+      title: "Reset Complete",
+      description: "The map has been reset to its initial state.",
+    });
+  };
+
   return (
     <div className="min-h-screen bg-mapbg p-8">
       <div className="max-w-7xl mx-auto">
-        <div className="mb-8 text-center">
+        <div className="mb-8 text-center space-y-4">
           <h1 className="text-4xl font-bold text-white mb-4">
             Shortest Route Finder: Chattogram to Dhaka
           </h1>
-          <Button
-            onClick={handleGenerateRoute}
-            className="bg-[#6E59A5] hover:bg-[#9b87f5] text-white"
-          >
-            Generate Shortest Route
-          </Button>
+          <div className="flex justify-center gap-4">
+            <Button
+              onClick={handleGenerateRoute}
+              className="bg-red-500 hover:bg-red-600 text-white font-bold"
+              disabled={mstEdges !== undefined}
+            >
+              Generate Shortest Route
+            </Button>
+            <Button
+              onClick={handleReset}
+              className="bg-gray-500 hover:bg-gray-600 text-white font-bold"
+            >
+              Reset Map
+            </Button>
+          </div>
         </div>
-        <div className="bg-mapbg/50 rounded-lg shadow-xl p-4 aspect-[4/3]">
-          <Graph nodes={nodes} edges={edges} mstEdges={mstEdges} />
+        <div className="bg-mapbg/50 rounded-lg shadow-xl p-4 aspect-[6/4]">
+          <Graph 
+            nodes={nodes} 
+            edges={edges} 
+            mstEdges={mstEdges}
+            onAnimationComplete={() => {
+              toast({
+                title: "Destination Reached!",
+                description: "The shortest path to Dhaka has been completed.",
+              });
+            }}
+          />
         </div>
       </div>
     </div>
