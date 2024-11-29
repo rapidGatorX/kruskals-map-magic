@@ -36,7 +36,7 @@ const Index = () => {
     setMstEdges(mst);
     toast({
       title: "Route Generated!",
-      description: "The cheapest route has been calculated using Kruskal's algorithm.",
+      description: "The shortest route has been calculated using Kruskal's algorithm.",
     });
   };
 
@@ -45,13 +45,13 @@ const Index = () => {
       <div className="max-w-7xl mx-auto">
         <div className="mb-8 text-center">
           <h1 className="text-4xl font-bold text-white mb-4">
-            Cheapest Route Finder: Chattogram to Dhaka
+            Shortest Route Finder: Chattogram to Dhaka
           </h1>
           <Button
             onClick={handleGenerateRoute}
-            className="bg-[#8B5CF6] hover:bg-[#7C3AED] text-white"
+            className="bg-[#6E59A5] hover:bg-[#9b87f5] text-white"
           >
-            Generate Cheapest Route
+            Generate Shortest Route
           </Button>
         </div>
         <div className="bg-mapbg/50 rounded-lg shadow-xl p-4 aspect-[4/3]">

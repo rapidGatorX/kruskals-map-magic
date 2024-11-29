@@ -1,5 +1,6 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
+import { PersonStanding } from "lucide-react";
 
 interface Node {
   id: string;
@@ -22,8 +23,65 @@ interface GraphProps {
 
 const Graph: React.FC<GraphProps> = ({ nodes, edges, mstEdges, className }) => {
   const svgRef = useRef<SVGSVGElement>(null);
+  const [iconPosition, setIconPosition] = useState({ x: 0, y: 0 });
+  const [isAnimating, setIsAnimating] = useState(false);
 
   const findNode = (id: string) => nodes.find((n) => n.id === id);
+
+  useEffect(() => {
+    if (mstEdges && !isAnimating) {
+      setIsAnimating(true);
+      // Find path from Chattogram to Dhaka using MST
+      const chattogramNode = findNode("Chattogram");
+      if (chattogramNode) {
+        setIconPosition({ x: chattogramNode.x, y: chattogramNode.y });
+      }
+
+      // Animate along the path
+      const animateAlongPath = async () => {
+        if (!mstEdges) return;
+        
+        const path = mstEdges.map(edge => {
+          const source = findNode(edge.source);
+          const target = findNode(edge.target);
+          return { source, target };
+        });
+
+        for (const segment of path) {
+          if (segment.source && segment.target) {
+            await new Promise<void>((resolve) => {
+              const duration = 1000;
+              const startTime = Date.now();
+              const startX = segment.source.x;
+              const startY = segment.source.y;
+              const endX = segment.target.x;
+              const endY = segment.target.y;
+
+              const animate = () => {
+                const elapsed = Date.now() - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+
+                const currentX = startX + (endX - startX) * progress;
+                const currentY = startY + (endY - startY) * progress;
+
+                setIconPosition({ x: currentX, y: currentY });
+
+                if (progress < 1) {
+                  requestAnimationFrame(animate);
+                } else {
+                  resolve();
+                }
+              };
+
+              requestAnimationFrame(animate);
+            });
+          }
+        }
+      };
+
+      animateAlongPath();
+    }
+  }, [mstEdges]);
 
   return (
     <svg
@@ -53,8 +111,8 @@ const Graph: React.FC<GraphProps> = ({ nodes, edges, mstEdges, className }) => {
               className={cn(
                 "stroke-4",
                 isMST
-                  ? "stroke-[#8B5CF6] animate-path-trace"
-                  : "stroke-route opacity-30"
+                  ? "stroke-[#6E59A5] animate-path-trace"
+                  : "stroke-[#D6BCFA] opacity-30"
               )}
               strokeDasharray={isMST ? "1000" : "0"}
             />
@@ -90,6 +148,13 @@ const Graph: React.FC<GraphProps> = ({ nodes, edges, mstEdges, className }) => {
           </text>
         </g>
       ))}
+
+      {/* Animated person icon */}
+      {isAnimating && (
+        <g transform={`translate(${iconPosition.x - 12}, ${iconPosition.y - 12})`}>
+          <PersonStanding className="w-6 h-6 text-white" />
+        </g>
+      )}
     </svg>
   );
 };
