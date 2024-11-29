@@ -5,13 +5,13 @@ import { kruskalMST } from "@/utils/kruskal";
 import { useToast } from "@/components/ui/use-toast";
 
 const nodes = [
-  { id: "Chattogram", x: 600, y: 400 },
-  { id: "Dhaka", x: 200, y: 200 },
-  { id: "Cumilla", x: 450, y: 300 },
-  { id: "Chandpur", x: 350, y: 400 },
-  { id: "Feni", x: 500, y: 450 },
-  { id: "Brahmanbaria", x: 400, y: 150 },
-  { id: "Narsingdi", x: 250, y: 300 },
+  { id: "Chattogram", x: 750, y: 500 },
+  { id: "Dhaka", x: 250, y: 250 },
+  { id: "Cumilla", x: 550, y: 375 },
+  { id: "Chandpur", x: 450, y: 500 },
+  { id: "Feni", x: 650, y: 550 },
+  { id: "Brahmanbaria", x: 500, y: 200 },
+  { id: "Narsingdi", x: 300, y: 375 },
 ];
 
 const edges = [
@@ -42,19 +42,19 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-mapbg p-8">
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-7xl mx-auto">
         <div className="mb-8 text-center">
           <h1 className="text-4xl font-bold text-white mb-4">
             Cheapest Route Finder: Chattogram to Dhaka
           </h1>
           <Button
             onClick={handleGenerateRoute}
-            className="bg-route hover:bg-route-highlight text-white"
+            className="bg-[#8B5CF6] hover:bg-[#7C3AED] text-white"
           >
             Generate Cheapest Route
           </Button>
         </div>
-        <div className="bg-mapbg/50 rounded-lg shadow-xl p-4 aspect-video">
+        <div className="bg-mapbg/50 rounded-lg shadow-xl p-4 aspect-[4/3]">
           <Graph nodes={nodes} edges={edges} mstEdges={mstEdges} />
         </div>
       </div>

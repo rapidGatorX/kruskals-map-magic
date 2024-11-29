@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import { cn } from "@/lib/utils";
 
 interface Node {
@@ -29,7 +29,7 @@ const Graph: React.FC<GraphProps> = ({ nodes, edges, mstEdges, className }) => {
     <svg
       ref={svgRef}
       className={cn("w-full h-full", className)}
-      viewBox="0 0 800 600"
+      viewBox="0 0 1000 800"
     >
       {/* Draw edges */}
       {edges.map((edge) => {
@@ -51,9 +51,9 @@ const Graph: React.FC<GraphProps> = ({ nodes, edges, mstEdges, className }) => {
               x2={target.x}
               y2={target.y}
               className={cn(
-                "stroke-2",
+                "stroke-4",
                 isMST
-                  ? "stroke-route-highlight animate-path-trace"
+                  ? "stroke-[#8B5CF6] animate-path-trace"
                   : "stroke-route opacity-30"
               )}
               strokeDasharray={isMST ? "1000" : "0"}
@@ -77,12 +77,12 @@ const Graph: React.FC<GraphProps> = ({ nodes, edges, mstEdges, className }) => {
           <circle
             cx={node.x}
             cy={node.y}
-            r="10"
-            className="fill-node stroke-white stroke-2 animate-node-pulse"
+            r="12"
+            className="fill-node stroke-white stroke-2"
           />
           <text
             x={node.x}
-            y={node.y + 25}
+            y={node.y + 30}
             className="fill-white text-sm font-semibold"
             textAnchor="middle"
           >

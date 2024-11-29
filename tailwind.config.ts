@@ -25,17 +25,12 @@ export default {
         node: "#000000",
       },
       keyframes: {
-        "node-pulse": {
-          "0%, 100%": { transform: "scale(1)" },
-          "50%": { transform: "scale(1.1)" },
-        },
         "path-trace": {
           "0%": { strokeDashoffset: "1000" },
           "100%": { strokeDashoffset: "0" },
         },
       },
       animation: {
-        "node-pulse": "node-pulse 2s ease-in-out infinite",
         "path-trace": "path-trace 2s ease-out forwards",
       },
     },
